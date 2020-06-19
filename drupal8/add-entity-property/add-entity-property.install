@@ -1,0 +1,26 @@
+<?php
+
+// By putting this in an update hook we can alter the database to create a table field to store the values.
+
+/**
+ * Update entity type.
+ */
+function mymodule_update_8001() {
+  $storage_definition = BaseFieldDefinition::create('boolean')
+    ->setLabel(t('New custom property'))
+    ->setDescription(t('Adds a custom property for a given entity.'))
+    // Make it available in form displays.
+    ->setDisplayOptions('form', [
+      'weight' => 2,
+    ])
+    // Make it available in view displays.
+    ->setDisplayOptions('view', [
+      'weight' => 2,
+    ])
+    ->setDisplayConfigurable('form', TRUE);
+
+  // Add the property for the given entity type.
+  // First value is the name of the table field.
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('new_custom_property', 'node', 'node', $storage_definition);
+}

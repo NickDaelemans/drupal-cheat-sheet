@@ -1,0 +1,24 @@
+<?php
+
+// This is the same code as we use in the .install file.
+// This allows us to see the field at the right places.
+function mymodule_entity_base_field_info(EntityTypeInterface $entity_type) {
+  $fields = [];
+  if ($entity_type->id() === 'node') {
+    $fields['new_custom_property'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('New custom property'))
+      ->setDescription(t('Adds a custom property for a given entity.'))
+      // Make it available in form displays.
+      ->setDisplayOptions('form', [
+        'weight' => 2,
+      ])
+      // Make it available in view displays.
+      ->setDisplayOptions('view', [
+        'weight' => 2,
+      ])
+      ->setDisplayConfigurable('form', TRUE);
+
+
+    return $fields;
+  }
+}
